@@ -1,12 +1,32 @@
-// Example data
+// Example data with explicit image paths
 const races = [
-  { name: "Dwarf", set: "Basic", stats: { STR:2, CON:1, WIZ:-1, CHA:-1, INT:-1 } },
-  { name: "Elf", set: "Otherworldly beings", stats: { DEX:2, WIZ:1, INT:1, CON:-1 } }
+  { 
+    name: "Dwarf", 
+    set: "Basic", 
+    image: "images/Dwarf.png", 
+    stats: { STR:2, CON:1, WIZ:-1, CHA:-1, INT:-1 } 
+  },
+  { 
+    name: "Elf", 
+    set: "Otherworldly beings", 
+    image: "images/Elf.png", 
+    stats: { DEX:2, WIZ:1, INT:1, CON:-1 } 
+  }
 ];
 
 const classes = [
-  { name: "Barbarian", set: "Steel and blood", stats: { STR:1, CON:2, INT:-2, WIZ:-1 } },
-  { name: "Wizard", set: "Deep magics", stats: { WIZ:3, INT:2, STR:-1, CON:-1 } }
+  { 
+    name: "Barbarian", 
+    set: "Steel and blood", 
+    image: "images/Barbarian.png", 
+    stats: { STR:1, CON:2, INT:-2, WIZ:-1 } 
+  },
+  { 
+    name: "Wizard", 
+    set: "Deep magics", 
+    image: "images/Wizard.png", 
+    stats: { WIZ:3, INT:2, STR:-1, CON:-1 } 
+  }
 ];
 
 let selectedRace = null;
@@ -68,6 +88,7 @@ function renderOverview() {
   document.getElementById("overview").textContent = JSON.stringify(stats);
 }
 
+// Card rendering
 function renderCard(entity, type) {
   const card = document.createElement("div");
   card.className = "card";
@@ -78,10 +99,10 @@ function renderCard(entity, type) {
   nameDiv.textContent = entity.name;
   card.appendChild(nameDiv);
 
-  // Image
+  // Image (use explicit property)
   const img = document.createElement("img");
   img.className = "card-image";
-  img.src = `images/${entity.name.toLowerCase()}.png`; // adjust path
+  img.src = entity.image;
   card.appendChild(img);
 
   // Stats table
