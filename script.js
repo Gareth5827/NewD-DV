@@ -27,11 +27,7 @@ function renderRaceGrid() {
   const grid = document.getElementById("raceGrid");
   grid.innerHTML = "";
   races.forEach(r => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<strong>${r.name}</strong>`;
-    card.onclick = () => showRace(r);
-    grid.appendChild(card);
+    grid.appendChild(renderCard(r, "race"));
   });
 }
 
@@ -51,11 +47,7 @@ function renderClassGrid() {
   const grid = document.getElementById("classGrid");
   grid.innerHTML = "";
   classes.forEach(c => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<strong>${c.name}</strong>`;
-    card.onclick = () => showClass(c);
-    grid.appendChild(card);
+    grid.appendChild(renderCard(c, "class"));
   });
 }
 
@@ -74,6 +66,66 @@ function selectClass() {
 function renderOverview() {
   const stats = calculateStats(selectedRace, selectedClass);
   document.getElementById("overview").textContent = JSON.stringify(stats);
+}
+
+function renderCard(entity, type) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  // Name
+  const nameDiv = document.createElement("div");
+  nameDiv.className = "card-name";
+  nameDiv.textContent = entity.name;
+  card.appendChild(nameDiv);
+
+  // Image
+  const img = document.createElement("img");
+  img.className = "card-image";
+  img.src = `images/${entity.name.toLowerCase()}.png`; // adjust path
+  card.appendChild(img);
+
+  // Stats table
+  const table = document.createElement("table");
+  table.className = "stats-table";
+
+  const topRow = document.createElement("tr");
+  ["STR","DEX","CON","WIZ","CHA"].forEach(stat => {
+    const td = document.createElement("td");
+    td.textContent = `${stat}: ${formatStat(entity.stats[stat]||0)}`;
+    td.className = statClass(entity.stats[stat]||0);
+    topRow.appendChild(td);
+  });
+  table.appendChild(topRow);
+
+  const bottomRow = document.createElement("tr");
+  ["INT","HP","AC","SPD","INI"].forEach(stat => {
+    const td = document.createElement("td");
+    td.textContent = `${stat}: ${formatStat(entity.stats[stat]||0)}`;
+    td.className = statClass(entity.stats[stat]||0);
+    bottomRow.appendChild(td);
+  });
+  table.appendChild(bottomRow);
+
+  card.appendChild(table);
+
+  // Click behavior
+  card.onclick = () => {
+    if (type === "race") showRace(entity);
+    else showClass(entity);
+  };
+
+  return card;
+}
+
+function formatStat(value) {
+  if (value > 0) return `+${value}`;
+  return value.toString();
+}
+
+function statClass(value) {
+  if (value > 0) return "pos";
+  if (value < 0) return "neg";
+  return "neutral";
 }
 
 function calculateStats(race, cls) {
