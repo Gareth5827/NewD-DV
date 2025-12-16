@@ -43,11 +43,10 @@ const races = [
         spellMods: []
       }
     ]
-  }
-];
+  },
   { 
     name: "Elf", 
-    set: "Otherworldly beings", 
+    set: "Basic", 
     image: "images/Elf.png", 
     stats: { DEX:2, WIZ:1, INT:1, CON:-1 } 
   }
