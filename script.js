@@ -4,8 +4,47 @@ const races = [
     name: "Dwarf", 
     set: "Basic", 
     image: "images/Dwarf.png", 
-    stats: { STR:2, CON:1, WIZ:-1, CHA:-1, INT:-1 } 
-  },
+    stats: { CON:2, STR:1, INT:-1, CHA:-1, INI:-1 }, 
+    bonuses: `
+      <ul>
+        <li><b>Speech:</b> Ability to speak and read Common and Dwarvish</li>
+        <li><b>Steady:</b> No speed penalty while wearing any armour</li>
+        <li><b>Dark vision:</b> Ability to see in the dark up to 60 ft</li>
+        <li><b>Hearty:</b> +1 to CON saves</li>
+      </ul>
+    `,
+    variations: [
+      {
+        name: "Mountain Dwarf",
+        desc: `
+          <b>Warhammer:</b> 2D6 + STR<br>
+          <b>Stout armour:</b> Take 1D8 less slashing damage<br>
+          <b>Stone pick:</b> Deal 1D8 + STR<br>
+          <b>Fire kit:</b> 3 uses<br>
+          <b>Food rations:</b> 5<br>
+          <b>Darker vision:</b> +20 ft dark vision
+        `,
+        inventory: ["Warhammer", "Stone pick", "Fire kit (3 uses)", "5 Food Rations"],
+        spellMods: []
+      },
+      {
+        name: "Arctic Dwarf",
+        desc: `
+          <b>Cold resistance:</b> Take 1D6 less cold damage<br>
+          <b>Ice pick:</b> Deal 1D10 + STR<br>
+          <b>Medium armour:</b> Take 1D4 less damage from attacks<br>
+          <b>Fire kit:</b> 5 uses<br>
+          <b>Medium sized blanket:</b> 3<br>
+          <b>Shield:</b> +2 AC when raised<br>
+          <b>Food rations:</b> 5<br>
+          <b>Northern resistance:</b> Take 1D6 less cold damage
+        `,
+        inventory: ["Ice pick", "Medium armour", "Fire kit (5 uses)", "Medium blanket (3)", "Shield", "5 Food Rations"],
+        spellMods: []
+      }
+    ]
+  }
+];
   { 
     name: "Elf", 
     set: "Otherworldly beings", 
