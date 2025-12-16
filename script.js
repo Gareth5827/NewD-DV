@@ -5,14 +5,12 @@ const races = [
     set: "Basic", 
     image: "images/Dwarf.png", 
     stats: { CON:2, STR:1, INT:-1, CHA:-1, INI:-1 }, 
-    bonuses: `
-      <ul>
-        <li><b>Speech:</b> Ability to speak and read Common and Dwarvish</li>
-        <li><b>Steady:</b> No speed penalty while wearing any armour</li>
-        <li><b>Dark vision:</b> Ability to see in the dark up to 60 ft</li>
-        <li><b>Hearty:</b> +1 to CON saves</li>
-      </ul>
-    `,
+    bonuses: [
+      { name: "Speech", desc: "Ability to speak and read Common and Dwarvish" },
+      { name: "Steady", desc: "No speed penalty while wearing any armour" },
+      { name: "Dark vision", desc: "Ability to see in the dark up to 60 ft" },
+      { name: "Hearty", desc: "+1 to CON saves" }
+    ],
     variations: [
       {
         name: "Mountain Dwarf",
@@ -118,9 +116,15 @@ function showRace(race) {
   document.getElementById("raceStats").innerHTML =
     `<div class="pos">${posStats.join("<br>")}</div>
      <div class="neg">${negStats.join("<br>")}</div>`;
-
+  
   // Bonuses
-  document.getElementById("raceBonuses").textContent = race.bonuses || "";
+  const bonusesDiv = document.getElementById("raceBonuses");
+  bonusesDiv.innerHTML = "";
+  (race.bonuses || []).forEach(b => {
+    const line = document.createElement("div");
+    line.innerHTML = `<b>${b.name}:</b> ${b.desc}`;
+    bonusesDiv.appendChild(line);
+  });
 
   // Variations
   const container = document.getElementById("raceVariations");
