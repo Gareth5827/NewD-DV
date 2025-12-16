@@ -33,12 +33,13 @@
   </div>
 
   <!-- RacePage -->
-  <div id="RacePage" class="page" style="display:none;">
-    <h1 id="raceName"></h1>
-    <div id="raceDetails"></div>
-    <button onclick="goToPage('SelectRacePage')">Back</button>
-    <button onclick="selectRace()">Select Race</button>
-  </div>
+<div id="RacePage" class="page" style="display:none;">
+  <h1 id="raceName" class="center"></h1>
+  <div id="raceStats" class="stats-columns"></div>
+  <div id="raceBonuses" class="text-box"></div>
+  <div id="raceVariations" class="variations"></div>
+  <button onclick="goToPage('SelectRacePage')">Back</button>
+</div>
 
   <!-- SelectClassPage -->
   <div id="SelectClassPage" class="page" style="display:none;">
@@ -48,12 +49,19 @@
   </div>
 
   <!-- ClassPage -->
-  <div id="ClassPage" class="page" style="display:none;">
-    <h1 id="className"></h1>
-    <div id="classDetails"></div>
-    <button onclick="goToPage('SelectClassPage')">Back</button>
-    <button onclick="selectClass()">Select Class</button>
+<div id="ClassPage" class="page" style="display:none;">
+  <h1 id="className" class="center"></h1>
+  <div id="classStats" class="stats-columns"></div>
+  <div id="classMechanics" class="text-box"></div>
+  <div id="classAbilities">
+    <h3>Level 1 Spells</h3><div id="classLevel1"></div>
+    <h3>Level 2 Spells</h3><div id="classLevel2"></div>
+    <h3>Level 3 Spells</h3><div id="classLevel3"></div>
   </div>
+  <div id="classInventory" class="text-box"></div>
+  <button onclick="goToPage('SelectClassPage')">Back</button>
+  <button onclick="selectClass()">Select Class</button>
+</div>
 
   <!-- GeneratePage -->
   <div id="GeneratePage" class="page" style="display:none;">
