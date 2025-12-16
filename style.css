@@ -96,8 +96,12 @@ button:hover {
 }
 
 .stats-table td {
-  padding: 4px;
-  text-align: center;
+  font-size: 1.1em;   /* larger text for affected stats */
+  padding: 4px 6px;
+}
+
+.stats-table td.neutral {
+  display: none;      /* hide stats that are 0 */
 }
 
 .pos { color: green; font-weight: bold; }
