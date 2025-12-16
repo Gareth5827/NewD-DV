@@ -31,6 +31,20 @@ const classes = [
 
 let selectedRace = null;
 let selectedClass = null;
+let inventory = [];
+let spells = [];
+
+function addToInventory(item) {
+  inventory.push(item);
+}
+
+function applySpellMod(mod) {
+  // Example: find spell by name and apply modification
+  const spell = spells.find(s => s.name === mod.spell);
+  if (spell) {
+    spell.desc += " " + mod.effect;
+  }
+}
 
 // Page navigation
 function goToPage(pageId) {
@@ -54,8 +68,45 @@ function renderRaceGrid() {
 function showRace(race) {
   selectedRace = race;
   document.getElementById("raceName").textContent = race.name;
-  document.getElementById("raceDetails").textContent = JSON.stringify(race.stats);
+
+  // Stats split
+  const posStats = [];
+  const negStats = [];
+  for (let stat in race.stats) {
+    const val = race.stats[stat];
+    if (val > 0) posStats.push(`${stat}: +${val}`);
+    if (val < 0) negStats.push(`${stat}: ${val}`);
+  }
+  document.getElementById("raceStats").innerHTML =
+    `<div class="pos">${posStats.join("<br>")}</div>
+     <div class="neg">${negStats.join("<br>")}</div>`;
+
+  // Bonuses
+  document.getElementById("raceBonuses").textContent = race.bonuses || "";
+
+  // Variations
+  const container = document.getElementById("raceVariations");
+  container.innerHTML = "";
+  (race.variations || []).forEach(v => {
+    const div = document.createElement("div");
+    div.className = "variation";
+    div.innerHTML = `
+      <div class="variation-name">${v.name}</div>
+      <div class="variation-desc">${v.desc}</div>
+      <button onclick="selectVariation('${v.name}')">Select</button>
+    `;
+    container.appendChild(div);
+  });
+
   goToPage("RacePage");
+}
+
+function selectVariation(name) {
+  const variation = selectedRace.variations.find(v => v.name === name);
+  // Add inventory items
+  variation.inventory?.forEach(item => addToInventory(item));
+  // Add spell modifications
+  variation.spellMods?.forEach(mod => applySpellMod(mod));
 }
 
 function selectRace() {
@@ -93,43 +144,33 @@ function renderCard(entity, type) {
   const card = document.createElement("div");
   card.className = "card";
 
-  // Name
   const nameDiv = document.createElement("div");
   nameDiv.className = "card-name";
   nameDiv.textContent = entity.name;
   card.appendChild(nameDiv);
 
-  // Image (use explicit property)
   const img = document.createElement("img");
   img.className = "card-image";
   img.src = entity.image;
   card.appendChild(img);
 
-  // Stats table
   const table = document.createElement("table");
   table.className = "stats-table";
 
-  const topRow = document.createElement("tr");
-  ["STR","DEX","CON","WIZ","CHA"].forEach(stat => {
-    const td = document.createElement("td");
-    td.textContent = `${stat}: ${formatStat(entity.stats[stat]||0)}`;
-    td.className = statClass(entity.stats[stat]||0);
-    topRow.appendChild(td);
+  const row = document.createElement("tr");
+  Object.keys(entity.stats).forEach(stat => {
+    const val = entity.stats[stat];
+    if (val !== 0) {
+      const td = document.createElement("td");
+      td.textContent = `${stat}: ${formatStat(val)}`;
+      td.className = statClass(val);
+      row.appendChild(td);
+    }
   });
-  table.appendChild(topRow);
-
-  const bottomRow = document.createElement("tr");
-  ["INT","HP","AC","SPD","INI"].forEach(stat => {
-    const td = document.createElement("td");
-    td.textContent = `${stat}: ${formatStat(entity.stats[stat]||0)}`;
-    td.className = statClass(entity.stats[stat]||0);
-    bottomRow.appendChild(td);
-  });
-  table.appendChild(bottomRow);
+  table.appendChild(row);
 
   card.appendChild(table);
 
-  // Click behavior
   card.onclick = () => {
     if (type === "race") showRace(entity);
     else showClass(entity);
