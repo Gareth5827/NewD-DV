@@ -1,6 +1,5 @@
 // Example data with explicit image paths
 const races = [
-const races = [
   { 
     name: "Dwarf", 
     set: "Basic", 
