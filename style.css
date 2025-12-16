@@ -21,6 +21,22 @@ body {
   gap: 20px;
 }
 
+.variations {
+  margin-top: 20px;
+}
+.variation {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.variation-name {
+  font-weight: bold;
+  margin-left: 20px; /* indent */
+}
+.variation-desc {
+  margin-left: 40px; /* further indent for details */
+}
+
 /* Card styling */
 .card {
   width: 200px;
