@@ -77,7 +77,7 @@ const classes = [
       { name: "Bone charm", desc: "Can be used as a level 2 spell on a killed unit to put a bone on the charm and gain +1 damage on attacks" },
       { name: "Pelt", desc: "Take 1D4 less damage from cold and poison damage" }
     ]
-  }
+  },
   { 
     name: "Wizard", 
     set: "Basic", 
