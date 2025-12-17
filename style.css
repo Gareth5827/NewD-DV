@@ -52,6 +52,22 @@ body {
   transform: scale(1.05);
 }
 
+/* Indent spell sections */
+#classAbilities h3 {
+  margin-left: 20px;   /* indent the section headers */
+  margin-top: 15px;
+}
+
+#classAbilities div {
+  margin-left: 40px;   /* indent the spell entries */
+  margin-bottom: 5px;
+}
+
+/* Add space before Inventory */
+#classInventory {
+  margin-top: 25px;    /* space between Level 3 spells and Inventory */
+}
+
 /* Stat coloring */
 .pos {
   color: green;
