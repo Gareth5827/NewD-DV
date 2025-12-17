@@ -145,8 +145,9 @@ function showRace(race) {
 }
 
 function selectVariation(name) {
-  selectedVariation = selectedRace.variations.find(v => v.name === name);
-  if (!selectedVariation) return;
+  // look up the variation object by name
+  const variation = selectedRace.variations.find(v => v.name === name);
+  if (!variation) return; // safety check
 
   // Add inventory items
   variation.inventory?.forEach(item => addToInventory(item));
@@ -154,7 +155,7 @@ function selectVariation(name) {
   // Add spell modifications
   variation.spellMods?.forEach(mod => applySpellMod(mod));
 
-  // After picking a variation, go straight to class selection
+  // Move to class selection page
   goToPage("SelectClassPage");
 }
 
