@@ -69,6 +69,7 @@ let selectedRace = null;
 let selectedClass = null;
 let inventory = [];
 let spells = [];
+let selectedVariation = null;
 
 function addToInventory(item) {
   inventory.push(item);
@@ -144,11 +145,17 @@ function showRace(race) {
 }
 
 function selectVariation(name) {
-  const variation = selectedRace.variations.find(v => v.name === name);
+  selectedVariation = selectedRace.variations.find(v => v.name === name);
+  if (!selectedVariation) return;
+
   // Add inventory items
   variation.inventory?.forEach(item => addToInventory(item));
+
   // Add spell modifications
   variation.spellMods?.forEach(mod => applySpellMod(mod));
+
+  // After picking a variation, go straight to class selection
+  goToPage("SelectClassPage");
 }
 
 function selectRace() {
