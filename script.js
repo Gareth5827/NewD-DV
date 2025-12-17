@@ -53,13 +53,34 @@ const races = [
 const classes = [
   { 
     name: "Barbarian", 
-    set: "Steel and blood", 
+    set: "Basic", 
     image: "images/Barbarian.png", 
-    stats: { STR:1, CON:2, INT:-2, WIZ:-1 } 
-  },
+    stats: { STR:1, CON:2, INT:-2, DEX:-1 }, 
+    mechanics: "The Barbarian can rage as a bonus action to take half damage (rounded down) from all sources for 4 turns [once per battle]",
+    abilities: {
+      level1: [
+        { name: "Wrath", desc: "Deal +2 slashing damage on all Attacks for 4 turns" },
+        { name: "Fearless charge", desc: "Move 20 ft in any direction and ignore terrain penalties and effects (damage still applies)" }
+      ],
+      level2: [
+        { name: "Pummel", desc: "After grappling a unit, they make a DEX roll vs you, on fail they take 1D6 + STR and cannot move on their turn, you may use this again to continue the spell" },
+        { name: "Battlecry", desc: "All hostile units in a 25 ft range make a roll of (10 + STR) or higher, any that fail have a -3 to all Attacks until the start of your next turn" }
+      ],
+      level3: [
+        { name: "Execute", desc: "Kill a hostile unit in a 10 ft range that has (10 + STR) or less health and frighten all hostile units in a 20 ft range" }
+      ]
+    },
+    inventory: [
+      { name: "Greataxe", desc: "1D12 + 2 + STR (two handed action)" },
+      { name: "Hand axe", desc: "1D6 + 1 + STR (one handed action)" },
+      { name: "Leather gloves", desc: "+1 to hit on attacks" },
+      { name: "Bone charm", desc: "Can be used as a level 2 spell on a killed unit to put a bone on the charm and gain +1 damage on attacks" },
+      { name: "Pelt", desc: "Take 1D4 less damage from cold and poison damage" }
+    ]
+  }
   { 
     name: "Wizard", 
-    set: "Deep magics", 
+    set: "Basic", 
     image: "images/Wizard.png", 
     stats: { WIZ:3, INT:2, STR:-1, CON:-1 } 
   }
@@ -175,7 +196,30 @@ function renderClassGrid() {
 function showClass(cls) {
   selectedClass = cls;
   document.getElementById("className").textContent = cls.name;
-  document.getElementById("classDetails").textContent = JSON.stringify(cls.stats);
+
+  // Stats split
+  const posStats = [];
+  const negStats = [];
+  for (let stat in cls.stats) {
+    const val = cls.stats[stat];
+    if (val > 0) posStats.push(`${stat}: +${val}`);
+    if (val < 0) negStats.push(`${stat}: ${val}`);
+  }
+  document.getElementById("classStats").innerHTML =
+    `<div class="pos">${posStats.join("<br>")}</div>
+     <div class="neg">${negStats.join("<br>")}</div>`;
+
+  // Mechanics
+  document.getElementById("classMechanics").innerHTML = `<b>Mechanic:</b> ${cls.mechanics}`;
+
+  // Abilities
+  document.getElementById("classLevel1").innerHTML = cls.abilities.level1.map(a => `<b>${a.name}:</b> ${a.desc}`).join("<br>");
+  document.getElementById("classLevel2").innerHTML = cls.abilities.level2.map(a => `<b>${a.name}:</b> ${a.desc}`).join("<br>");
+  document.getElementById("classLevel3").innerHTML = cls.abilities.level3.map(a => `<b>${a.name}:</b> ${a.desc}`).join("<br>");
+
+  // Inventory
+  document.getElementById("classInventory").innerHTML = `<b>Inventory:</b><br>` + cls.inventory.map(i => `<div style="margin-left:20px;"><b>${i.name}:</b> ${i.desc}</div>`).join("");
+
   goToPage("ClassPage");
 }
 
