@@ -212,10 +212,13 @@ function showClass(cls) {
   // Mechanics
   document.getElementById("classMechanics").innerHTML = `<b>Mechanic:</b> ${cls.mechanics}`;
 
-  // Abilities
-  document.getElementById("classLevel1").innerHTML = cls.abilities.level1.map(a => `<b>${a.name}:</b> ${a.desc}`).join("<br>");
-  document.getElementById("classLevel2").innerHTML = cls.abilities.level2.map(a => `<b>${a.name}:</b> ${a.desc}`).join("<br>");
-  document.getElementById("classLevel3").innerHTML = cls.abilities.level3.map(a => `<b>${a.name}:</b> ${a.desc}`).join("<br>");
+// Abilities
+document.getElementById("classLevel1").innerHTML =
+  cls.abilities.level1.map(a => `<div><b>${a.name}:</b> ${a.desc}</div>`).join("");
+document.getElementById("classLevel2").innerHTML =
+  cls.abilities.level2.map(a => `<div><b>${a.name}:</b> ${a.desc}</div>`).join("");
+document.getElementById("classLevel3").innerHTML =
+  cls.abilities.level3.map(a => `<div><b>${a.name}:</b> ${a.desc}</div>`).join("");
 
   // Inventory
   document.getElementById("classInventory").innerHTML = `<b>Inventory:</b><br>` + cls.inventory.map(i => `<div style="margin-left:20px;"><b>${i.name}:</b> ${i.desc}</div>`).join("");
